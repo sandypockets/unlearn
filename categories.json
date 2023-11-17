@@ -1,0 +1,95 @@
+[
+  {
+    "groupLabel": "Science",
+    "options": [
+      {
+        "label": "Biology and Genetics",
+        "value": "biology-and-genetics"
+      },
+      {
+        "label": "Neuroscience and Brain Research",
+        "value": "neuroscience-and-brain-research"
+      },
+      {
+        "label": "Environmental and Earth Sciences",
+        "value": "environmental-earth-sciences"
+      }
+    ]
+  },
+  {
+    "groupLabel": "Health & Medicine",
+    "options": [
+      {
+        "label": "Epidemiology and Public Health",
+        "value": "epidemiology-and-public-health"
+      },
+      {
+        "label": "Medical Advances and Treatments",
+        "value": "medical-advances-and-treatments"
+      },
+      {
+        "label": "Nutrition and Diet",
+        "value": "nutrition-and-diet"
+      },
+      {
+        "label": "Mental Health and Psychology",
+        "value": "mental-health-and-psychology"
+      }
+    ]
+  },
+  {
+    "groupLabel": "Technology",
+    "options": [
+      {
+        "label": "Artificial Intelligence and Robotics",
+        "value": "artificial-intelligence-and-robotics"
+      },
+      {
+        "label": "Cybersecurity and Data Privacy",
+        "value": "cybersecurity-and-data-privacy"
+      },
+      {
+        "label": "Internet, Digital Media, and Social Networks",
+        "value": "internet-and-digital-media"
+      },
+      {
+        "label": "Renewable Energy and Sustainability",
+        "value": "renewable-energy-and-sustainability"
+      }
+    ]
+  },
+  {
+    "groupLabel": "Climate & Environment",
+    "options": [
+      {
+        "label": "Climate Change and Environmental Impact",
+        "value": "climate-change-and-environmental-impact"
+      },
+      {
+        "label": "Conservation and Biodiversity",
+        "value": "conservation-and-biodiversity"
+      }
+    ]
+  },
+  {
+    "groupLabel": "Space & Astronomy",
+    "options": [
+      {
+        "label": "Astronomical Discoveries and Phenomena",
+        "value": "astronomical-and-discoveries"
+      },
+      {
+        "label": "Astrophysics and Exoplanets",
+        "value": "astrophysics-and-exoplanets"
+      },
+      {
+        "label": "Astronomy and Cosmology",
+        "value": "astronomy-and-cosmology"
+      },
+      {
+        "label": "Space Exploration and Missions",
+        "value": "space-exploration-and-missions"
+      }
+    ]
+  }
+]

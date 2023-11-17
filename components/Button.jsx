@@ -1,7 +1,25 @@
-export default function Button({ children, type = 'button', onClick }) {
+import { motion } from 'framer-motion';
+
+export default function Button({ children, type = 'button', onClick, className = '' }) {
+  const hoverAnimation = {
+    scale: 1.05,
+    transition: { duration: 0.2 },
+  };
+
+  const clickAnimation = {
+    scale: 0.95,
+    transition: { duration: 0.1 },
+  };
+
   return (
-    <button className="px-3 py-2 rounded-lg bg-blue-500" type={type} onClick={onClick}>
+    <motion.button
+      className={`${className} px-3 py-2 rounded-lg bg-blue-500`}
+      type={type}
+      onClick={onClick}
+      whileHover={hoverAnimation}
+      whileTap={clickAnimation}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }

@@ -1,21 +1,40 @@
-import OpenAI from 'openai'
+import OpenAI from 'openai';
 
 const openAiSecretKey = process.env.OPEN_AI_SECRET_KEY;
 const openai = new OpenAI({ apiKey: openAiSecretKey });
 
 function constructPrompt(date, category, previousKeywords = []) {
-  let exclusionPhrase = '';
-  if (previousKeywords?.length > 0) {
-    exclusionPhrase = `Use topics that do avoid these keywords: ${previousKeywords.join(', ')}.`;
-  }
+  const contentInstructions = `Please include a brief description of both the original belief and the new understanding, along with the year the new understanding became widely recognized. The description should be suitable for a 7th grade reading level and not exceed 275 characters.`;
 
-  return `Please generate a JSON-formatted response with a brief summary of a fact from the category "${category}" that was widely accepted but has been disproven or revised since ${date}. The JSON should include two keys: 'content' and 'keyword'. 'Content' should describe the original belief, the new understanding, and the specific year of revision. Write for a 7th grade reading level. 'keywords' should contain keywords related to your specific response. You will receive these keywords in subsequent queries to ensure you do not produce duplicate content. Do not fabricate facts. Cite sources when possible within a 250-character limit. Example JSON response: {"content": "Fact about [topic] goes here.", "keyword": "central-theme"}. ${exclusionPhrase}`;
+  const exclusionCriteria =
+    previousKeywords.length > 0
+      ? `Avoid topics related to "${previousKeywords.join(
+          ', '
+        )}" to prevent duplicate content in multiple API calls.`
+      : '';
+
+  const keywordGuidelines = `Provide 1-3 specific, comma-separated keywords related to the content. Avoid general terms or years. Keywords are used to ensure unique content in subsequent queries.`;
+
+  const authenticityRequirement = `Only include accurate facts with known dates. Do not fabricate details or dates. Cite sources when possible.`;
+
+  const exampleJSON = `{"content": "In [year], it was discovered that [new understanding], revising the previous belief that [original belief].", "keyword": "specific-term,related-term"}`;
+
+  return `Generate a concise summary of a revised or disproven fact in the "${category}" category, specifically one that has changed since ${date}. The response should be JSON-formatted, containing two keys: 'content' and 'keyword'.
+  
+  Content Requirements: ${contentInstructions}
+
+  ${exclusionCriteria}
+
+  Keyword Guidelines: ${keywordGuidelines}
+
+  Fact Authenticity: ${authenticityRequirement}
+
+  Example JSON: ${exampleJSON}`;
 }
 
-
-async function getOutdatedFacts(date, category, previousKeywords) {
-  if (!date || !category) return;
-  const messageContent = constructPrompt(date, category, previousKeywords);
+async function getOutdatedFacts(date, subcategory, previousKeywords) {
+  if (!date || !subcategory) return;
+  const messageContent = constructPrompt(date, subcategory, previousKeywords);
   const completion = await openai.chat.completions.create({
     messages: [{ role: 'system', content: messageContent }],
     model: 'gpt-3.5-turbo',
@@ -35,8 +54,8 @@ export default function handler(req, res) {
     res.status(405).json({ error: 'Method not allowed' });
     return;
   }
-  const { date, category, previousKeywords } = req.body;
-  getOutdatedFacts(date, category, previousKeywords)
+  const { date, subcategory, previousKeywords } = req.body;
+  getOutdatedFacts(date, subcategory, previousKeywords)
     .then(factJson => {
       res.status(200).json(factJson);
     })
