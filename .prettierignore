@@ -1,0 +1,14 @@
+# Ignore artifacts:
+build
+coverage
+.next
+node_modules
+public
+.env.*
+.gitignore
+jsconfig.json
+package.json
+package-lock.json
+yarn.lock
+README.md
+*.log
