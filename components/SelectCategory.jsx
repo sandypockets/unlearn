@@ -2,7 +2,7 @@ import categories from '@/categories.json';
 
 export default function SelectCategory({ onCategoryChange }) {
   return (
-    <div className="w-full max-w-xs">
+    <div id="select-category" className="w-full max-w-xs">
       <select
         onChange={onCategoryChange}
         className="w-full px-3 py-2 bg-transparent text-white border border-gray-300 rounded-md"

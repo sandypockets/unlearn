@@ -51,6 +51,11 @@ export default function Home() {
     }
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await postDateToAPI(date, subcategory);
+  }
+
   function renderKeywords(keywords) {
     return keywords?.split(',').map((keyword, index) => (
       <span
@@ -69,23 +74,23 @@ export default function Home() {
         <h4 className="text-xl font-medium">A lot's changed since you were in school</h4>
       </div>
       <section className="mt-12 flex flex-col items-center gap-0 max-w-xs mx-auto">
-        <div>
-          <span className="text-xs">Choose category</span>
-          <SelectCategory onCategoryChange={e => setSubcategory(e.target.value)} />
-        </div>
-        <div className="flex flex-row justify-between w-full">
-          <div className="w-full">
-            <span className="text-xs">Choose year</span>
-            <ReactDatePicker setDate={setDate} date={date} />
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="select-category" className="text-xs">
+              Choose category
+            </label>
+            <SelectCategory onCategoryChange={e => setSubcategory(e.target.value)} />
           </div>
-        </div>
-        <Button
-          loading={loading}
-          className="w-full mt-3"
-          onClick={() => postDateToAPI(date.getFullYear(), subcategory)}
-        >
-          Find out what's changed
-        </Button>
+          <div className="flex flex-row justify-between w-full">
+            <div className="w-full">
+              <label className="text-xs">Choose year</label>
+              <ReactDatePicker setDate={setDate} date={date} />
+            </div>
+          </div>
+          <Button loading={loading} type="submit" className="w-full mt-3">
+            Find out what's changed
+          </Button>
+        </form>
       </section>
       <section className="py-12">
         <AnimatePresence>
