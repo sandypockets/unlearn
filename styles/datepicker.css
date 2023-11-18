@@ -1,0 +1,37 @@
+.year-picker.react-datepicker__year {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.react-datepicker__year-wrapper {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  justify-items: center;
+  max-width: none !important;
+}
+
+.react-datepicker__year-text {
+  width: 3rem !important;
+  padding: 0.25rem !important;
+}
+
+div.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker-popper {
+  width: 20rem;
+}
+
+.react-datepicker {
+  width: 100%;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

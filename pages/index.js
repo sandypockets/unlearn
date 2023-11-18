@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import ReactDatePicker from '../components/ReactDatePicker';
-import SelectCategory from '@/components/SelectCategory';
-import Button from '@/components/Button';
-import { capitalizeWords, formatUrlString, findParentCategory, generateFactId } from '@/helpers';
+import { findParentCategory, generateFactId } from '@/helpers';
 import Form from '@/components/Form';
 import Facts from '@/components/Facts';
 
@@ -59,10 +55,12 @@ export default function Home() {
   }
 
   return (
-    <main className="py-12">
-      <div className="flex flex-col items-center">
-        <h1 className="text-7xl font-bold">Unlearn</h1>
-        <h4 className="text-xl font-medium">A lot's changed since you were in school</h4>
+    <main className="flex flex-col items-center mx-auto py-12">
+      <div className="flex flex-col items-center mx-6">
+        <h1 className="text-5xl sm:text-7xl font-bold">Unlearn</h1>
+        <h4 className="text-lg sm:text-xl font-medium text-center">
+          A lot's changed since you were in school
+        </h4>
       </div>
       <Form
         handleSubmit={handleSubmit}

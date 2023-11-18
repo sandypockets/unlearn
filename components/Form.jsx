@@ -4,7 +4,7 @@ import Button from '@/components/Button';
 
 export default function Form({ handleSubmit, setSubcategory, setDate, date, loading }) {
   return (
-    <section className="mt-12 flex flex-col items-center gap-0 max-w-xs mx-auto">
+    <section className="mt-12 flex flex-col items-center gap-0 max-w-xs mx-auto px-6 sm:px-0">
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="select-category" className="text-xs">
