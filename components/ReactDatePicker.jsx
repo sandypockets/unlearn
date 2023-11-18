@@ -1,5 +1,4 @@
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import ButtonWithRef from '@/components/ButtonWithRef';
 
 export default function ReactDatePicker({ date, setDate }) {
@@ -9,15 +8,14 @@ export default function ReactDatePicker({ date, setDate }) {
   return (
     <DatePicker
       selected={date}
-      onChange={date => {
-        setDate(new Date(date.getFullYear(), 0, 1));
+      onChange={newDate => {
+        setDate(new Date(newDate.getFullYear(), 0, 1));
       }}
       showYearPicker
       dateFormat="yyyy"
       yearItemNumber={20}
       minDate={minDate}
       maxDate={maxDate}
-      // Disable other pickers
       showMonthDropdown={false}
       showMonthYearDropdown={false}
       showFullMonthYearPicker={false}
