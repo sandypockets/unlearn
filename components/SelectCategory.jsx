@@ -8,7 +8,7 @@ export default function SelectCategory({ onCategoryChange }) {
         className="w-full px-3 py-2 bg-transparent text-white border border-gray-300 rounded-md"
       >
         {categories.map(categoryGroup => (
-          <optgroup key={categoryGroup.groupLabel} label={categoryGroup.groupLabel}>
+          <optgroup key={categoryGroup['groupLabel']} label={categoryGroup['groupLabel']}>
             {categoryGroup.options.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
