@@ -55,7 +55,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center mx-auto py-12">
+    <main className="flex flex-col items-center mx-auto py-12 min-h-screen">
       <div className="flex flex-col items-center mx-6">
         <h1 className="text-5xl sm:text-7xl font-bold">Unlearn</h1>
         <h4 className="text-lg sm:text-xl font-medium text-center">
