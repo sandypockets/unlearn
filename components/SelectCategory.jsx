@@ -5,7 +5,7 @@ export default function SelectCategory({ onCategoryChange }) {
     <div className="w-full max-w-xs">
       <select
         onChange={onCategoryChange}
-        className="w-full px-3 py-2 bg-white text-black border border-gray-300 rounded-md"
+        className="w-full px-3 py-2 bg-transparent text-white border border-gray-300 rounded-md"
       >
         {categories.map(categoryGroup => (
           <optgroup key={categoryGroup.groupLabel} label={categoryGroup.groupLabel}>
