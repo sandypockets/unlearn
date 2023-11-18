@@ -9,15 +9,17 @@ export default function Home() {
   const [date, setDate] = useState(new Date(new Date().getFullYear() - 20, 0, 1));
   const [facts, setFacts] = useState([]);
   const [subcategory, setSubcategory] = useState('biology-and-genetics');
-  const [previousKeywords, setPreviousKeywords] = useState([]);
+  const [previousKeywords, setPreviousKeywords] = useState({});
   const [loading, setLoading] = useState(false);
 
   async function postDateToAPI(date, subcategoryValue) {
     const parentCategory = findParentCategory(subcategoryValue);
     const url = '/api/unlearn';
-    const data = { date, subcategory: subcategory, previousKeywords };
+    const categoryKeywords = previousKeywords[parentCategory] || [];
+    const data = { date, subcategory: subcategory, previousKeywords: categoryKeywords };
 
     try {
+      setLoading(true);
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,11 +38,16 @@ export default function Home() {
       };
 
       setFacts([newFact, ...facts]);
-      setPreviousKeywords([...previousKeywords, result.keyword]);
+      setPreviousKeywords({
+        ...previousKeywords,
+        [parentCategory]: [...(previousKeywords[parentCategory] || []), result.keyword],
+      });
 
       return result;
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -58,23 +65,26 @@ export default function Home() {
   return (
     <main className="py-12">
       <div className="flex flex-col items-center">
-        <h1 className="text-6xl font-bold">Unlearn</h1>
+        <h1 className="text-7xl font-bold">Unlearn</h1>
         <h4 className="text-xl font-medium">A lot's changed since you were in school</h4>
       </div>
-      <section className="mt-12 flex flex-col items-center gap-2 max-w-xs mx-auto">
-        <p>What's changed in</p>
+      <section className="mt-12 flex flex-col items-center gap-0 max-w-xs mx-auto">
         <div>
+          <span className="text-xs">Choose category</span>
           <SelectCategory onCategoryChange={e => setSubcategory(e.target.value)} />
         </div>
-        <div className="flex flex-row justify-between w-full gap-2">
-          <p className="flex flex-col justify-center">Since: </p>
+        <div className="flex flex-row justify-between w-full">
           <div className="w-full">
+            <span className="text-xs">Choose year</span>
             <ReactDatePicker setDate={setDate} date={date} />
           </div>
-          <p className="flex flex-col justify-center">?</p>
         </div>
-        <Button className="w-full" onClick={() => postDateToAPI(date.getFullYear(), subcategory)}>
-          Find out
+        <Button
+          loading={loading}
+          className="w-full mt-3"
+          onClick={() => postDateToAPI(date.getFullYear(), subcategory)}
+        >
+          Find out what's changed
         </Button>
       </section>
       <section className="py-12">
@@ -92,11 +102,11 @@ export default function Home() {
               <div className="flex flex-row items-center">
                 <img
                   src={`/images/${formatUrlString(factObject.factCategory)}.png`}
-                  className="h-20 w-20 object-contain mr-4"
+                  className="h-16 w-16 object-contain mr-4"
                 />
                 <p>{factObject.factContent}</p>
               </div>
-              <div className="flex flex-row flex-wrap gap-2 ml-20 pl-4">
+              <div className="flex flex-row flex-wrap gap-2 ml-16 pl-4">
                 <span className="px-2 py-0.5 bg-blue-500 rounded-lg text-sm max-w-min whitespace-nowrap">
                   {factObject.factCategory.split('-').join()}
                 </span>

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
-export default function Button({ children, type = 'button', onClick, className = '' }) {
+export default function Button({ children, type = 'button', onClick, className = '', loading }) {
   const hoverAnimation = {
-    scale: 1.05,
+    scale: 1.03,
     transition: { duration: 0.2 },
   };
 
@@ -19,7 +19,7 @@ export default function Button({ children, type = 'button', onClick, className =
       whileHover={hoverAnimation}
       whileTap={clickAnimation}
     >
-      {children}
+      {loading ? 'Loading...' : children}
     </motion.button>
   );
 }
