@@ -4,32 +4,24 @@ const openAiSecretKey = process.env.OPEN_AI_SECRET_KEY;
 const openai = new OpenAI({ apiKey: openAiSecretKey });
 
 function constructPrompt(date, category, previousKeywords = []) {
-  const contentInstructions = `Please include a brief description of both the original belief and the new understanding, along with the year the new understanding became widely recognized. The description should be suitable for a 7th grade reading level and not exceed 275 characters.`;
-
-  const exclusionCriteria =
+  let exclusionPhrase =
     previousKeywords.length > 0
-      ? `Avoid topics related to "${previousKeywords.join(
+      ? `Exclude any facts related to: "${previousKeywords.join(
           ', '
-        )}" to prevent duplicate content in multiple API calls.`
-      : '';
+        )}". This is to avoid repetition, as these topics have been previously covered.`
+      : 'Consider all topics within the specified category.';
 
-  const keywordGuidelines = `Provide 1-3 specific, comma-separated keywords related to the content. Avoid general terms or years. Keywords are used to ensure unique content in subsequent queries.`;
+  return `Create a JSON response summarizing a fact in the "${category}" category that has changed since ${date}. Ensure the fact aligns precisely with this category and timeframe.
 
-  const authenticityRequirement = `Only include accurate facts with known dates. Do not fabricate details or dates. Cite sources when possible.`;
+  Content Requirements: Include a short description of the original belief, the revised understanding, and the year the new understanding was recognized. Limit the description to 275 characters and write for a 7th-grade reading level.
 
-  const exampleJSON = `{"content": "In [year], it was discovered that [new understanding], revising the previous belief that [original belief].", "keyword": "specific-term,related-term"}`;
+  Exclusion Criteria: ${exclusionPhrase}
 
-  return `Generate a concise summary of a revised or disproven fact in the "${category}" category, specifically one that has changed since ${date}. The response should be JSON-formatted, containing two keys: 'content' and 'keyword'.
-  
-  Content Requirements: ${contentInstructions}
+  Keyword Instructions: Provide 1-3 specific, comma-separated keywords related to the fact. Avoid general terms and years. These keywords are crucial for preventing duplicate responses in subsequent queries.
 
-  ${exclusionCriteria}
+  Fact Authenticity: Only factual information with verified dates is acceptable. Avoid fabricating details or dates. Where possible, cite sources.
 
-  Keyword Guidelines: ${keywordGuidelines}
-
-  Fact Authenticity: ${authenticityRequirement}
-
-  Example JSON: ${exampleJSON}`;
+  Example JSON Format: {"content": "In [year], it was found that [new understanding], revising the previous belief that [original belief].", "keyword": "specific-term,related-term"}`;
 }
 
 async function getOutdatedFacts(date, subcategory, previousKeywords) {
