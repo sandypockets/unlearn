@@ -2,6 +2,8 @@
 # Unlearn
 Unlearn is a simple educational web application that challenges what you thought you knew. It's a journey through time, exploring how facts, common knowledge, and scientific understandings have changed since you last studied the subject, illustrating that knowledge is not static.
 
+![Unlearn](https://github.com/sandypockets/unlearn/blob/main/docs/unlearn.png?raw=true)
+
 ## How to Use
 
 1. **Select a Year**: Use the year picker to choose the year you graduated high school.
